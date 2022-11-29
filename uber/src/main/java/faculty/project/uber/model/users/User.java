@@ -34,9 +34,12 @@ public abstract class User  {
     @OneToOne
     private Photo photo;
     private Boolean blocked;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
-    @OneToOne
-    private Coordinates address;
+
+    private String address;
 }
 
