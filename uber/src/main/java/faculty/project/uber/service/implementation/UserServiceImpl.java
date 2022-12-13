@@ -1,5 +1,6 @@
 package faculty.project.uber.service.implementation;
 
+import faculty.project.uber.dto.user.request.ChangePasswordRequest;
 import faculty.project.uber.dto.user.request.ChangeUserDataRequest;
 import faculty.project.uber.dto.user.response.ReadUserResponse;
 import faculty.project.uber.model.users.User;
@@ -29,5 +30,18 @@ public class UserServiceImpl implements UserService {
         u.setAddress(req.getAddress());
         User savedUser = userRepository.save(u);
         return new ReadUserResponse(savedUser);
+    }
+
+    @Override
+    public void changePassword(Long id, ChangePasswordRequest req) {
+        User u = userRepository.findById(id).get();
+//        if(!passwordEncoder.matches(req.getCurrentPassword(), u.getPassword())){
+//            throw new BadPassword("bad password");
+//        }
+//        String newPassword = passwordEncoder.encode(req.getNewPassword());
+        String newPassword = req.getNewPassword();
+        u.setPassword(newPassword);
+
+        userRepository.save(u);
     }
 }
