@@ -1,6 +1,7 @@
 package faculty.project.uber.controller;
 
 
+import faculty.project.uber.dto.user.request.ChangePasswordRequest;
 import faculty.project.uber.dto.user.request.ChangeUserDataRequest;
 import faculty.project.uber.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,12 @@ public class UserController {
 
         return new ResponseEntity(userService.changeUserData(id,req),HttpStatus.OK);
     }
+
+    @PutMapping("/changePassword/{id}")
+    ResponseEntity changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest req){
+
+        userService.changePassword(id,req);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }
