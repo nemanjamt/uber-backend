@@ -1,5 +1,7 @@
 package faculty.project.uber.service.implementation;
 
+import faculty.project.uber.dto.user.request.ChangeUserDataRequest;
+import faculty.project.uber.dto.user.response.ReadUserResponse;
 import faculty.project.uber.model.users.User;
 import faculty.project.uber.repository.UserRepository;
 import faculty.project.uber.service.UserService;
@@ -14,7 +16,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findOne(Long id) {
-        return userRepository.findById(id).get();
+    public ReadUserResponse findOne(Long id) {
+        return  new ReadUserResponse(userRepository.findById(id).get());
+    }
+
+    @Override
+    public ReadUserResponse changeUserData(Long id, ChangeUserDataRequest req) {
+        User u = userRepository.findById(id).get();
+        u.setName(req.getName());
+        u.setLastName(req.getLastName());
+        u.setPhone(req.getPhone());
+        u.setAddress(req.getAddress());
+        User savedUser = userRepository.save(u);
+        return new ReadUserResponse(savedUser);
     }
 }

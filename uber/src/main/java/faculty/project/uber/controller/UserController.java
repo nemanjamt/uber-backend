@@ -1,14 +1,12 @@
 package faculty.project.uber.controller;
 
 
+import faculty.project.uber.dto.user.request.ChangeUserDataRequest;
 import faculty.project.uber.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -23,5 +21,11 @@ public class UserController {
     @GetMapping("/{id}")
     ResponseEntity findOne(@PathVariable Long id){
         return new ResponseEntity(userService.findOne(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity changeUserData(@RequestBody ChangeUserDataRequest req, @PathVariable Long id){
+
+        return new ResponseEntity(userService.changeUserData(id,req),HttpStatus.OK);
     }
 }
