@@ -7,6 +7,7 @@ import faculty.project.uber.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("#id == authentication.principal.id")
     @GetMapping("/{id}")
     ResponseEntity findOne(@PathVariable Long id){
         return new ResponseEntity(userService.findOne(id), HttpStatus.OK);
@@ -30,6 +32,7 @@ public class UserController {
         return new ResponseEntity(userService.changeUserData(id,req),HttpStatus.OK);
     }
 
+    @PreAuthorize("#id == authentication.principal.id")
     @PutMapping("/changePassword/{id}")
     ResponseEntity changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest req){
 
