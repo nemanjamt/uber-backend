@@ -1,5 +1,6 @@
 package faculty.project.uber.model.users;
 
+import faculty.project.uber.model.others.DriverDataChangeRequest;
 import faculty.project.uber.model.others.Rejection;
 import faculty.project.uber.model.others.Ride;
 import faculty.project.uber.model.others.Vehicle;
@@ -28,4 +29,7 @@ public class Driver extends User{
     private Boolean available;
     @OneToMany
     private List<Rejection> rejections;
+
+    @OneToOne
+    DriverDataChangeRequest driverDataChangeRequest;
 }
