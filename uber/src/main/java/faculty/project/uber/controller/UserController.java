@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -37,6 +39,18 @@ public class UserController {
     ResponseEntity changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest req){
 
         userService.changePassword(id,req);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/forgotPassword/{username}")
+    ResponseEntity forgotPassword(@PathVariable String username){
+        userService.forgotPassword(username);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/resetPassword/{token}")
+    ResponseEntity resetForgottenPassword(@PathVariable String token, @Valid @RequestBody ChangePasswordRequest req){
+        userService.resetPassword(token, req);
         return new ResponseEntity(HttpStatus.OK);
     }
 
