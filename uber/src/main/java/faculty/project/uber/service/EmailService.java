@@ -5,5 +5,5 @@ import faculty.project.uber.model.users.User;
 
 public interface EmailService {
     public void sendRegistrationEmail(Client c);
-
+    public void sendPasswordEmail(User u);
 }

@@ -7,13 +7,17 @@ import faculty.project.uber.dto.user.request.ChangeUserDataRequest;
 import faculty.project.uber.dto.user.response.ReadUserResponse;
 import faculty.project.uber.exceptions.OAuth2AuthenticationProcessingException;
 import faculty.project.uber.exceptions.UserAlreadyExistsAuthenticationException;
+import faculty.project.uber.model.others.ResetPasswordToken;
 import faculty.project.uber.model.others.Role;
 import faculty.project.uber.model.users.Client;
 import faculty.project.uber.model.users.User;
+import faculty.project.uber.repository.ClientRepository;
 import faculty.project.uber.repository.RoleRepository;
 import faculty.project.uber.repository.UserRepository;
 import faculty.project.uber.security.oauth2.user.OAuth2UserInfo;
 import faculty.project.uber.security.oauth2.user.OAuth2UserInfoFactory;
+import faculty.project.uber.service.EmailService;
+import faculty.project.uber.service.ResetPasswordTokenService;
 import faculty.project.uber.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,14 +35,24 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     UserRepository userRepository;
-    PasswordEncoder passwordEncoder;
 
+    @Autowired
+    EmailService emailService;
+
+    @Autowired
+    ClientRepository clientRepository;
+
+    @Autowired
+    ResetPasswordTokenService resetPasswordTokenService;
+    @Autowired
     private RoleRepository roleRepository;
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder){
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder){
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -145,5 +160,26 @@ public class UserServiceImpl implements UserService {
 //        return SignUpRequest.getBuilder().addProviderUserID(oAuth2UserInfo.getId()).addDisplayName(oAuth2UserInfo.getName()).addEmail(oAuth2UserInfo.getEmail())
 //                .addSocialProvider(GeneralUtils.toSocialProvider(registrationId)).addPassword("changeit").build();
         return s;
+    }
+
+    @Override
+    public void forgotPassword(String username) {
+        User u = findUserByUsername(username);
+        emailService.sendPasswordEmail(u);
+    }
+
+    @Override
+    public void resetPassword(String token, ChangePasswordRequest req) {
+        ResetPasswordToken r = resetPasswordTokenService.findByToken(token);
+        User u = r.getUser();
+        u.setPassword(passwordEncoder.encode(req.getNewPassword()));
+        userRepository.save(u);
+    }
+
+    public  User findUserByUsername(String username){
+        if(!userRepository.existsByUsername(username)){
+            throw new EntityNotFoundException("User with specified username does not exist");
+        }
+        return userRepository.findByUsername(username);
     }
 }

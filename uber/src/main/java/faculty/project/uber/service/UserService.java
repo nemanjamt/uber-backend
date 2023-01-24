@@ -23,4 +23,7 @@ public interface UserService {
 
     public User findUserByEmail(String email);
 
+    void forgotPassword(String username);
+    void resetPassword(String token, ChangePasswordRequest req);
+
 }
