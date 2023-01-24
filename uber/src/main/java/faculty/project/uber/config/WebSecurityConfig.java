@@ -97,6 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
                 .antMatchers("/all/**").permitAll()
+                .antMatchers("/api/client/**").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and().oauth2Login()
                 .authorizationEndpoint()
