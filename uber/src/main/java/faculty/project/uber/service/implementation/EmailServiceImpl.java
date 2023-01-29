@@ -32,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
         mailMessage.setSubject("Complete Registration");
         mailMessage.setFrom("uberovicuber9@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
-                +"http://localhost:4200/auth/confirm-registration?token="+confirmationTokenService.createToken(c).getConfirmationToken());
+                +"http://localhost:4200/uber/auth/confirm-registration?token="+confirmationTokenService.createToken(c).getConfirmationToken());
 
 
         javaMailSender.send(mailMessage);
@@ -45,7 +45,7 @@ public class EmailServiceImpl implements EmailService {
         mailMessage.setSubject("Forgotten password");
         mailMessage.setFrom("uberovicuber9@gmail.com");
         mailMessage.setText("To reset your password, please click here : "
-                +"http://localhost:4200/auth/create-new-password?token="+resetPasswordTokenService.createToken(u).getToken());
+                +"http://localhost:4200/uber/auth/create-new-password?token="+resetPasswordTokenService.createToken(u).getToken());
 
 
         javaMailSender.send(mailMessage);

@@ -1,5 +1,6 @@
 package faculty.project.uber.controller;
 
+import faculty.project.uber.dto.report.request.RideReportRequest;
 import faculty.project.uber.service.RideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,48 @@ public class RideController {
         return new ResponseEntity(rideService.findDetailedRideById(rideId), HttpStatus.OK);
     }
 
+
+    @PostMapping("/reportClient/{clientId}")
+    ResponseEntity getReportClient(@PathVariable Long clientId, @RequestBody RideReportRequest request){
+        return new ResponseEntity(rideService.findReportClient(clientId,request),HttpStatus.OK);
+    }
+
+    @PostMapping("/reportDriver/{driverId}")
+    ResponseEntity getReportDriver(@PathVariable Long driverId, @RequestBody RideReportRequest request){
+        return new ResponseEntity(rideService.findReportDriver(driverId,request),HttpStatus.OK);
+    }
+
+    @PostMapping("/reportAdmin")
+    ResponseEntity getReportAdmin( @RequestBody RideReportRequest request){
+        return new ResponseEntity(rideService.findReportAdmin(request), HttpStatus.OK);
+    }
+
+
+
+    @PostMapping("/reportSummaryClient/{clientId}")
+    ResponseEntity getReportSummaryClient(@PathVariable Long clientId, @RequestBody RideReportRequest request){
+        return new ResponseEntity(rideService.findReportSummaryClient(request,clientId),HttpStatus.OK);
+    }
+
+    @PostMapping("/reportSummaryDriver/{driverId}")
+    ResponseEntity getReportSummaryDriver(@PathVariable Long driverId, @RequestBody RideReportRequest request){
+        return new ResponseEntity(rideService.findReportSummaryDriver(request,driverId),HttpStatus.OK);
+    }
+
+    @PostMapping("/reportSummaryAdmin")
+    ResponseEntity getReportSummaryAdmin( @RequestBody RideReportRequest request){
+        return new ResponseEntity(rideService.findReportSummaryAdmin(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/reportSummaryByUsername/{username}")
+    ResponseEntity getReportSummaryByUsername(@PathVariable String username, @RequestBody RideReportRequest request){
+        return new ResponseEntity(rideService.findReportSummaryByUsername(request,username),HttpStatus.OK);
+    }
+
+    @PostMapping("/reportByUsername/{username}")
+    ResponseEntity getReportByUsername(@PathVariable String username, @RequestBody RideReportRequest request){
+        return new ResponseEntity(rideService.findReportByUsername(request,username),HttpStatus.OK);
+    }
 
 
 
