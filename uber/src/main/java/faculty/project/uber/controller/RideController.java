@@ -28,6 +28,11 @@ public class RideController {
         return new ResponseEntity(rideService.findByUsername(username), HttpStatus.OK);
     }
 
+    @GetMapping("/findDetailedRide/{rideId}")
+    ResponseEntity findDetailedRide(@PathVariable  Long rideId){
+        return new ResponseEntity(rideService.findDetailedRideById(rideId), HttpStatus.OK);
+    }
+
 
 
 
