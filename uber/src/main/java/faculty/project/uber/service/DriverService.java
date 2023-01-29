@@ -15,4 +15,8 @@ public interface DriverService {
     void activateDriver(Long id);
 
     void deactivateDriver(Long id);
+
+    boolean existsByUsername(String username);
+
+    Driver findByUsername(String username);
 }

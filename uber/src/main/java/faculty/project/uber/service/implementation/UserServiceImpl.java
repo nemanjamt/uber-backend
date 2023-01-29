@@ -103,8 +103,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private User buildUser(final SignUpRequest formDTO) {
-        User user = new Client();
+    private Client buildUser(final SignUpRequest formDTO) {
+        Client user = new Client();
         String[] fullName = formDTO.getName().split(" ");
         try{
             user.setName(fullName[0]);
@@ -123,6 +123,8 @@ public class UserServiceImpl implements UserService {
         user.setAddress("");
         user.setPassword("");
         user.setUsername(formDTO.getEmail());
+        user.setActivated(true);
+
         return user;
     }
     @Override

@@ -30,7 +30,18 @@ public class DriverServiceImpl implements DriverService {
         return driverRepository.findById(id).get();
     }
 
+    @Override
+    public boolean existsByUsername(String username) {
+        return driverRepository.existsByUsername(username);
+    }
 
+    @Override
+    public Driver findByUsername(String username) {
+        if(!existsByUsername(username)){
+            throw new EntityNotFoundException("Driver with specified username does not exists");
+        }
+        return driverRepository.findByUsername(username);
+    }
     @Override
     public boolean existsById(Long id) {
 
