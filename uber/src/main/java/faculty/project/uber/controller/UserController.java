@@ -22,7 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PreAuthorize("#id == authentication.principal.id")
+
     @GetMapping("/{id}")
     ResponseEntity findOne(@PathVariable Long id){
         return new ResponseEntity(userService.findOne(id), HttpStatus.OK);
