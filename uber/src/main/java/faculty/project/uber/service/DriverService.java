@@ -11,4 +11,8 @@ public interface DriverService {
 
     void saveDriver(Driver driver);
     List<ReadUserResponse> findAll();
+
+    void activateDriver(Long id);
+
+    void deactivateDriver(Long id);
 }

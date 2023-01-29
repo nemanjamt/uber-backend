@@ -20,7 +20,9 @@ public class Review {
     private int grade;
     private String comment;
     @ManyToOne
+    @JoinColumn(name = "ride_id")
     private Ride ride;
     @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 }

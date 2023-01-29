@@ -46,4 +46,20 @@ public class DriverServiceImpl implements DriverService {
     public List<ReadUserResponse> findAll() {
         return driverRepository.findAll().stream().map(d -> new ReadUserResponse(d)).toList();
     }
+
+    @Override
+    public void activateDriver(Long id) {
+        Driver d = findById(id);
+        d.setActive(true);
+        d.setAvailable(true);
+        driverRepository.save(d);
+    }
+
+    @Override
+    public void deactivateDriver(Long id) {
+        Driver d = findById(id);
+        d.setActive(false);
+        d.setAvailable(false);
+        driverRepository.save(d);
+    }
 }
