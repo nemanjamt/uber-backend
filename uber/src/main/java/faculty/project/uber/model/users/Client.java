@@ -1,6 +1,7 @@
 package faculty.project.uber.model.users;
 
 import faculty.project.uber.model.others.Payment;
+import faculty.project.uber.model.others.Review;
 import faculty.project.uber.model.others.Ride;
 import faculty.project.uber.model.others.Route;
 import lombok.Getter;
@@ -24,5 +25,11 @@ public class Client extends User{
     @OneToMany
     private List<Payment> payments;
     @ManyToMany
+    @JoinTable(name = "CLIENTS_RIDES",
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "ride_id"))
     private List<Ride> rides;
+
+    @OneToMany(mappedBy = "client")
+    List<Review> reviews;
 }

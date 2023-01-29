@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,7 +20,10 @@ public class Route {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private float length;
-    @OneToMany
-    private Set<Coordinates> routeCoordinates;
+    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<RouteCoordinates> routeCoordinates;
+//    @OneToMany
+//    private Set<RoutePart> routeParts;
 
 }

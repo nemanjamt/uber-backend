@@ -64,4 +64,17 @@ public class DriverController {
         driverDataChangeRequestService.rejectDataChangeRequest(id);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
+    @PutMapping("/deactivate/{id}")
+    ResponseEntity deactivateDriver(@PathVariable Long id){
+        driverService.deactivateDriver(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/activate/{id}")
+    ResponseEntity activateDriver(@PathVariable Long id){
+        driverService.activateDriver(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
