@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "Messages")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,9 @@ public class Message {
     @ManyToOne
     private Ride ride;
     @ManyToOne
+    @JoinColumn(name="sender_id")
     private User sender;
     @ManyToOne
+    @JoinColumn(name="receiver_id")
     private User receiver;
 }

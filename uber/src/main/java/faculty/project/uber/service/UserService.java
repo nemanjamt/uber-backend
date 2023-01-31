@@ -13,17 +13,21 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import java.util.Map;
 
 public interface UserService {
+    User getById(Long id);
     ReadUserResponse findOne(Long id);
     ReadUserResponse changeUserData(Long id, ChangeUserDataRequest req) ;
 
-    void changePassword(Long id, ChangePasswordRequest req);
+    User findUserByEmail(String email);
+
+    User registerNewUser(final SignUpRequest signUpRequest) throws UserAlreadyExistsAuthenticationException;
+
     LocalUser processUserRegistration(String registrationId, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo) throws UserAlreadyExistsAuthenticationException;
-
-    public User registerNewUser(final SignUpRequest signUpRequest) throws UserAlreadyExistsAuthenticationException;
-
-    public User findUserByEmail(String email);
+    void changePassword(Long id, ChangePasswordRequest req);
 
     void forgotPassword(String username);
     void resetPassword(String token, ChangePasswordRequest req);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 
+    User findByUsername(String username);
 }
