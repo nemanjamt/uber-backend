@@ -30,13 +30,13 @@ public interface RideRepository extends JpaRepository<Ride,Long> {
     List<ReportResponse> findRidesGroupByDateAndDriver(LocalDateTime startDate, LocalDateTime endDate, Long driverId);
 
 
-    //    @Query("SELECT new taxi.system.uberbackend.dto.report.response.ReportSummaryResponse(COUNT(r), DAY(date_trunc('day', :endDate) - date_trunc('day', :startDate)) , COALESCE(AVG(r.total),0), COALESCE(SUM(r.total),0), COALESCE(AVG(r.route.length),0), COALESCE(SUM(r.route.length),0)) FROM Ride r WHERE r.status = 4 AND r.ends BETWEEN :startDate AND :endDate")
-    @Query("SELECT new faculty.project.uber.dto.report.response.ReportSummaryResponse(COUNT(r), DAY(date_trunc('day', cast(:endDate as date)) - date_trunc('day', cast(:startDate as date))), COALESCE(AVG(r.total),0), COALESCE(SUM(r.total),0), COALESCE(AVG(r.route.length),0), COALESCE(SUM(r.route.length),0)) FROM Ride r WHERE r.status = 4 AND r.ends BETWEEN :startDate AND :endDate")
+
+    @Query("SELECT new faculty.project.uber.dto.report.response.ReportSummaryResponse(COUNT(r), DAY(date_trunc('day', :endDate) - date_trunc('day', :startDate)) , COALESCE(AVG(r.total),0), COALESCE(SUM(r.total),0), COALESCE(AVG(r.route.length),0), COALESCE(SUM(r.route.length),0)) FROM Ride r WHERE r.status = 4 AND r.ends BETWEEN :startDate AND :endDate")
     ReportSummaryResponse findTotalAndAverage(LocalDateTime startDate, LocalDateTime endDate);
 
-    @Query("SELECT new faculty.project.uber.dto.report.response.ReportSummaryResponse(COUNT(r), DAY(date_trunc('day', cast(:endDate as date)) - date_trunc('day', cast(:startDate as date))) , COALESCE(AVG(r.total),0), COALESCE(SUM(r.total),0), COALESCE(AVG(r.route.length),0), COALESCE(SUM(r.route.length),0)) FROM Ride r JOIN r.clients c WHERE r.status = 4 AND c.id=:clientId AND  r.ends BETWEEN :startDate AND :endDate")
+    @Query("SELECT new faculty.project.uber.dto.report.response.ReportSummaryResponse(COUNT(r), DAY(date_trunc('day', :endDate) - date_trunc('day', :startDate)) , COALESCE(AVG(r.total),0), COALESCE(SUM(r.total),0), COALESCE(AVG(r.route.length),0), COALESCE(SUM(r.route.length),0)) FROM Ride r JOIN r.clients c WHERE r.status = 4 AND c.id=:clientId AND  r.ends BETWEEN :startDate AND :endDate")
     ReportSummaryResponse findTotalAndAverageClient(LocalDateTime startDate, LocalDateTime endDate, Long clientId);
 
-    @Query("SELECT new faculty.project.uber.dto.report.response.ReportSummaryResponse(COUNT(r), DAY(date_trunc('day', cast(:endDate as date)) - date_trunc('day', cast(:startDate as date))) , COALESCE(AVG(r.total),0), COALESCE(SUM(r.total),0), COALESCE(AVG(r.route.length),0), COALESCE(SUM(r.route.length),0)) FROM Ride r  WHERE r.status = 4 AND r.driver.id = :driverId AND r.ends BETWEEN :startDate AND :endDate")
+    @Query("SELECT new faculty.project.uber.dto.report.response.ReportSummaryResponse(COUNT(r), DAY(date_trunc('day', :endDate) - date_trunc('day', :startDate)) , COALESCE(AVG(r.total),0), COALESCE(SUM(r.total),0), COALESCE(AVG(r.route.length),0), COALESCE(SUM(r.route.length),0)) FROM Ride r  WHERE r.status = 4 AND r.driver.id = :driverId AND r.ends BETWEEN :startDate AND :endDate")
     ReportSummaryResponse findTotalAndAverageDriver(LocalDateTime startDate, LocalDateTime endDate, Long driverId);
 }
