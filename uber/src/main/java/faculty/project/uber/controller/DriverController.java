@@ -1,5 +1,6 @@
 package faculty.project.uber.controller;
 
+import faculty.project.uber.dto.driver.request.DriverCreateRequestDto;
 import faculty.project.uber.dto.user.request.ChangeUserDataRequest;
 import faculty.project.uber.service.DriverDataChangeRequestService;
 import faculty.project.uber.service.DriverService;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -49,6 +52,13 @@ public class DriverController {
     @GetMapping("/dataChangeRequests")
     ResponseEntity findAllRequests(){
         return new ResponseEntity(driverDataChangeRequestService.findAllRequests(), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping()
+    ResponseEntity createDriver(@Valid @RequestBody DriverCreateRequestDto requestDto){
+        driverService.createDriver(requestDto);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
